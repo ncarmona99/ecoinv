@@ -1,0 +1,38 @@
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Login</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-input
+        type="text"
+        label="Usuario"
+        label-placement="floating"
+        fill="outline"
+        placeholder="Ingrese nombre de usuario"
+        [(ngModel)]="username"
+        required
+      ></ion-input>
+
+      <br />
+
+      <ion-input
+        type="password"
+        label="Contraseña"
+        label-placement="floating"
+        fill="outline"
+        placeholder="Contraseña"
+        [(ngModel)]="password"
+        required
+        ><ion-input-password-toggle slot="end"></ion-input-password-toggle
+      ></ion-input>
+      <ion-button
+        expand="block"
+        type="submit"
+        (click)="login(username, password)"
+        >Iniciar sesión</ion-button
+      >
+    </ion-card-content>
+  </ion-card>
+</ion-content>
