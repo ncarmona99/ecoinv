@@ -1,8 +1,8 @@
 export interface Solicitante {
-  id: number;
-  numrut: number;
-  dvrut: string;
+  idsolicitante: number;
+  numrut: number | null;
+  dvrut: string | null;
   nombre: string;
-  appaterno: string;
-  apmaterno: string;
+  appaterno: string | null;
+  apmaterno: string | null;
 }

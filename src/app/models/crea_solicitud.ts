@@ -1,9 +1,6 @@
-import { Solicitante } from './solicitante';
-import { Producto } from './producto';
-
 export interface CreaSolicitud {
-  producto: Producto;
-  solicitante: Solicitante;
-  fecha: Date;
+  producto: number | undefined;
+  solicitante: number;
+  fecha: Date | null;
   cantidad: number;
 }

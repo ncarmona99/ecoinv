@@ -1,10 +1,10 @@
 import { Categoria } from './categoria';
 
 export interface Producto {
-  id: number;
-  cod: string | null;
+  idproducto: number;
+  codproducto: string | null;
   empaque: string | null;
   descripcion: string;
   stock: number;
-  id_categoria: Categoria;
+  categoria_idcategoria: Categoria;
 }

@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="close()">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>Nueva solicitud</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card-content>
+    <ion-input
+      type="number"
+      label="Cantidad"
+      label-placement="floating"
+      fill="outline"
+      placeholder="Ingrese cantidad que solicita"
+      required
+    ></ion-input>
+  </ion-card-content>
+  <br />
+  <ion-card-content>
+    <ion-item>
+      <ion-select label="Solicitante" label-placement="floating">
+        <ion-select-option
+          *ngFor="let solicitante of solicitantes"
+          (value)="solicitante"
+          >{{solicitante.nombre}} {{solicitante.appaterno}}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+  </ion-card-content>
+  <ion-card-content>
+    <ion-button>Ingresar</ion-button>
+  </ion-card-content>
+</ion-content>
