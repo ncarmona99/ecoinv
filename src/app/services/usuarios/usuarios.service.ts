@@ -26,6 +26,8 @@ export class UsuariosService {
     },
   ];
 
+  private usuarioActual: Usuario | undefined;
+
   constructor() {}
 
   public obtener_lista_usuarios(): Usuario[] {
@@ -37,5 +39,13 @@ export class UsuariosService {
     return this.lista_de_usuarios.find(
       (usuario) => username == usuario.usuario
     );
+  }
+
+  public setUsuario(usuario: Usuario) {
+    this.usuarioActual = usuario;
+  }
+
+  public getUsuarioActual(): Usuario | undefined {
+    return this.usuarioActual;
   }
 }
