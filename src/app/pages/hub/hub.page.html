@@ -29,4 +29,29 @@
       <br />
     </ion-card-content>
   </ion-card>
+  <br />
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title> Realizar solicitud </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label> Nombre: </ion-label>
+        <ion-text>{{usuario?.nombre}} {{usuario?.apellido}}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label> Usuario: </ion-label>
+        <ion-text>{{usuario?.usuario}}</ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-label> Email: </ion-label>
+        <ion-text>{{usuario?.correo}}</ion-text>
+      </ion-item>
+      <ion-item *ngFor="let rol of usuario?.rol">
+        <ion-label> Perfil: </ion-label>
+        <ion-text>{{rol.nombre}}</ion-text>
+      </ion-item>
+      <br />
+    </ion-card-content>
+  </ion-card>
 </ion-content>

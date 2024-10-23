@@ -18,6 +18,4 @@ export class AutentificacionService {
       return false;
     }
   }
-
-  obtRol(username: string);
 }
