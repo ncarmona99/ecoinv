@@ -65,8 +65,8 @@ export class HomePage implements OnInit {
     console.log('ID seleccionado:', this.valorSel?.idproducto);
   }
   async edit() {
-    if (this.valorSel && this.valorSel.idproducto) {  // Asegurarse de que hay un producto seleccionado
-      console.log('Producto seleccionado ID:', this.valorSel.idproducto); // Agregar esto
+    if (this.valorSel && this.valorSel.idproducto) {  
+      console.log('Producto seleccionado ID:', this.valorSel.idproducto);
       const modal = await this.modalController.create({
         component: EditPage,
         componentProps: {

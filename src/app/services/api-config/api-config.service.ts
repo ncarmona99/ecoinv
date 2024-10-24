@@ -46,4 +46,13 @@ export class ApiConfigService {
       })
       .pipe(catchError(this.handleError));
   }
+
+  patch<T>(path: string, data: any): Observable<HttpResponse<T>> {
+    return this.http
+      .patch<T>(`${this.baseUrl}/${path}`, data, {
+        headers: this.getHeaders(),
+        observe: 'response',
+      })
+      .pipe(catchError(this.handleError));
+  }
 }
