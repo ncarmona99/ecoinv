@@ -1,6 +1,6 @@
 export interface CreaSolicitud {
-  producto: number | undefined;
-  solicitante: number;
-  fecha: Date | null;
+  producto_idproducto: number | undefined;
+  solicitante_idsolicitante: number;
+  fechasolicitud: Date | null;
   cantidad: number;
 }

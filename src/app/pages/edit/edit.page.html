@@ -11,6 +11,7 @@
   <ion-card-content>
     <ion-input
       type="number"
+      [(ngModel)]="cantidad"
       label="Cantidad"
       label-placement="floating"
       fill="outline"
@@ -21,16 +22,23 @@
   <br />
   <ion-card-content>
     <ion-item>
-      <ion-select label="Solicitante" label-placement="floating">
+      <ion-select
+        [(ngModel)]="solicitanteSeleccionado"
+        label="Solicitante"
+        label-placement="floating"
+        placeholder="Seleccione un solicitante"
+        required
+      >
         <ion-select-option
           *ngFor="let solicitante of solicitantes"
-          (value)="solicitante"
-          >{{solicitante.nombre}} {{solicitante.appaterno}}</ion-select-option
+          [value]="solicitante.idsolicitante"
         >
+          {{ solicitante.nombre }} {{ solicitante.appaterno }}
+        </ion-select-option>
       </ion-select>
     </ion-item>
   </ion-card-content>
   <ion-card-content>
-    <ion-button>Ingresar</ion-button>
+    <ion-button (click)="enviarSolicitud()">Ingresar</ion-button>
   </ion-card-content>
 </ion-content>
