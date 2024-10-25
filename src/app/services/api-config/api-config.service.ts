@@ -55,4 +55,13 @@ export class ApiConfigService {
       })
       .pipe(catchError(this.handleError));
   }
+  delete<T>(path: string, params?: HttpParams): Observable<HttpResponse<T>> {
+    return this.http
+      .delete<T>(`${this.baseUrl}/${path}`, {
+        headers: this.getHeaders(),
+        observe: 'response',
+        params,
+      })
+      .pipe(catchError(this.handleError));
+  }
 }

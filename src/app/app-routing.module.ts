@@ -37,6 +37,15 @@ const routes: Routes = [
       import('./pages/edit/edit.module').then((m) => m.EditPageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'solicitudes',
+    loadChildren: () => import('./pages/solicitudes/solicitudes.module').then( m => m.SolicitudesPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'mod-producto',
+    loadChildren: () => import('./pages/mod-producto/mod-producto.module').then( m => m.ModProductoPageModule)
+  },
 ];
 
 @NgModule({

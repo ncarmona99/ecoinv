@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Solicitudes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let solicitud of solicitudes">
+      <ion-label>
+        <h2>Solicitud #{{ solicitud.idsolicitud }}</h2>
+        <p>Producto: {{ solicitud.descripcion }}</p>
+        <p>Solicitante: {{ solicitud.nombre_completo }}</p> <!-- Cambia a nombre_completo -->
+        <p>Fecha: {{ solicitud.fechasolicitud | date:'medium' }}</p>
+        <p>Cantidad: {{ solicitud.cantidad }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
