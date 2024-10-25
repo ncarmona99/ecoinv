@@ -28,20 +28,24 @@ export class UsuariosService {
 
   private usuarioActual: Usuario | undefined;
 
-  constructor() {}
+  constructor() {
+    const usuarioEnLocalStorage = localStorage.getItem('usuario');
+    if (usuarioEnLocalStorage) {
+      this.usuarioActual = JSON.parse(usuarioEnLocalStorage);
+    }
+  }
 
   public obtener_lista_usuarios(): Usuario[] {
     return this.lista_de_usuarios;
   }
 
   public obtener_info_usuario(username: string): Usuario | undefined {
-    console.log(username);
     return this.lista_de_usuarios.find(
-      (usuario) => username == usuario.usuario
+      (usuario) => username === usuario.usuario
     );
   }
 
-  public setUsuario(usuario: Usuario) {
+  public setUsuario(usuario: Usuario | undefined) {
     this.usuarioActual = usuario;
   }
 
