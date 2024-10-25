@@ -42,4 +42,7 @@ export class ProductosService {
     const params = new HttpParams().set('idproducto', `eq.${id}`);
     return this.apiService.delete('producto', params);
   }
+  agregarProducto(producto: { codproducto: string | null; descripcion: string; stock: number }): Observable<HttpResponse<any>> {
+    return this.apiService.post(this.path, producto);
+  }
 }

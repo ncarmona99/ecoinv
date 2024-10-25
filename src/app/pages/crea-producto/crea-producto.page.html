@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="crearProducto()">
+    <ion-item>
+      <ion-label position="floating">Código del Producto</ion-label>
+      <ion-input [(ngModel)]="producto.codproducto" name="codproducto" required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-input [(ngModel)]="producto.descripcion" name="descripcion" required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Stock</ion-label>
+      <ion-input type="number" [(ngModel)]="producto.stock" name="stock" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Agregar Producto</ion-button>
+  </form>
+</ion-content>

@@ -44,7 +44,13 @@ const routes: Routes = [
   },
   {
     path: 'mod-producto',
-    loadChildren: () => import('./pages/mod-producto/mod-producto.module').then( m => m.ModProductoPageModule)
+    loadChildren: () => import('./pages/mod-producto/mod-producto.module').then( m => m.ModProductoPageModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'crea-producto',
+    loadChildren: () => import('./pages/crea-producto/crea-producto.module').then( m => m.CreaProductoPageModule),
+    canActivate: [AuthGuard],
   },
 ];
 

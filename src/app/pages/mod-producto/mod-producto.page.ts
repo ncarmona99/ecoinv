@@ -1,13 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Producto } from 'src/app/models/producto';
 import { ProductosService } from 'src/app/services/productos/productos.service';
-import { firstValueFrom } from 'rxjs';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import {CreaSolicitud} from 'src/app/models/crea_solicitud';
-import {SolicitanteService} from 'src/app/services/solicitante/solicitante.service';
-import {Solicitante} from 'src/app/models/solicitante';
-import { ModalController, LoadingController } from '@ionic/angular';
-import { EditPage } from '../edit/edit.page';
 
 @Component({
   selector: 'app-mod-producto',
