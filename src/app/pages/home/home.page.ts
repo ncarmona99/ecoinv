@@ -85,4 +85,12 @@ export class HomePage implements OnInit {
 
     loading.present();
   }
+
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      this.obtenerProductos();
+      event.target.complete();
+    }, 2000);
+  }
 }

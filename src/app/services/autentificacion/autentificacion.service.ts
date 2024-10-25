@@ -6,7 +6,7 @@ import { Usuario } from 'src/app/models/usuario';
   providedIn: 'root',
 })
 export class AutentificacionService {
-  private sessionTimeout = 5 * 60 * 1000; // 5 minutos en milisegundos
+  private sessionTimeout = 5 * 60 * 1000; // 1 minuto en milisegundos
 
   constructor(private _servicioUsuario: UsuariosService) {}
 

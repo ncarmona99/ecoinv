@@ -6,6 +6,7 @@ import { Solicitante } from 'src/app/models/solicitante';
 import { firstValueFrom } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ApiConfigService } from 'src/app/services/api-config/api-config.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit',
@@ -22,7 +23,8 @@ export class EditPage implements OnInit {
     private modalControl: ModalController,
     private navParams: NavParams,
     private _serviceSolicitante: SolicitanteService,
-    private apiConfigService: ApiConfigService
+    private apiConfigService: ApiConfigService,
+    private alertController: AlertController,
   ) {
     this.productoId = this.navParams.get('productoId'); // Obtiene el ID del producto seleccionado
     console.log('Producto ID en edit page:', this.productoId); // Agrega esto para depuración
@@ -44,7 +46,9 @@ export class EditPage implements OnInit {
   }
 
   async enviarSolicitud() {
+    let estado: boolean;
     if (!this.solicitanteSeleccionado || !this.cantidad) {
+
       console.error('Debe seleccionar un solicitante y una cantidad');
       return;
     }
@@ -59,10 +63,9 @@ export class EditPage implements OnInit {
       console.log('Stock actualizado correctamente');
     } catch (error) {
       console.error('Error al actualizar el stock:', error);
-      return; // Si falla la actualización, no continúes con la solicitud
+      return;
     }
     this.actualizarStockProducto(this.productoId, this.cantidad);
-    // Luego, crea la nueva solicitud
     const nuevaSolicitud: CreaSolicitud = {
       producto_idproducto: this.productoId,
       solicitante_idsolicitante: this.solicitanteSeleccionado,
@@ -75,8 +78,13 @@ export class EditPage implements OnInit {
         this.apiConfigService.post<any>('solicitud', nuevaSolicitud) // Ajusta el endpoint
       );
       console.log('Solicitud guardada:', response.body);
+      estado = true;
+      this.presentAlert(estado);
       this.modalControl.dismiss(); // Cierra el modal si todo sale bien
+      
     } catch (error) {
+      estado = false;
+      this.presentAlert(estado);
       console.error('Error al guardar la solicitud:', error);
     }
   }
@@ -125,5 +133,21 @@ export class EditPage implements OnInit {
       console.error('Error al actualizar el stock:', error);
     }
   }
+  async presentAlert(estado: boolean) {
+    if(estado==true){
+      const alert = await this.alertController.create({
+        header: 'Solicitud realizada con éxito',
+        buttons: ['Aceptar'],
+      });
   
+      await alert.present();
+
+    }else{
+      const alert = await this.alertController.create({
+        header: 'Ha ocurrido un error al enviar la solicitud',
+        buttons: ['Aceptar'],
+    })
+      await alert.present();
+    }
+  }
 }

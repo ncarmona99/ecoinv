@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AutentificacionService } from '../services/autentificacion/autentificacion.service';
-import { UsuariosService } from '../services/usuarios/usuarios.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,16 +8,14 @@ import { UsuariosService } from '../services/usuarios/usuarios.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private authService: AutentificacionService,
-    private usuarioService: UsuariosService,
     private router: Router
   ) {}
 
   canActivate(): boolean {
-    const usuario = this.usuarioService.getUsuarioActual();
-
-    if (usuario) {
+    if (this.authService.estaAutenticado()) {
       return true;
     } else {
+      // Redirige al usuario a la página de login si la sesión ha expirado
       this.router.navigate(['/login']);
       return false;
     }
