@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from 'src/app/services/productos/productos.service';
+import { Producto } from 'src/app/models/producto';
 
 @Component({
   selector: 'app-mod-producto',
@@ -7,10 +8,12 @@ import { ProductosService } from 'src/app/services/productos/productos.service';
   styleUrls: ['./mod-producto.page.scss'],
 })
 export class ModProductoPage implements OnInit {
-
-  productos: any[] = [];
-  editando: number | null = null;  // Guarda el ID del producto en edición
+  productos: Producto[] = [];
+  editando: number | null = null; // Guarda el ID del producto en edición
   descripcionActualizada: string = ''; // Almacena la descripción actualizada
+
+  currentPage = 0;
+  itemsPerPage = 10;
 
   constructor(private productoService: ProductosService) {}
 
@@ -19,14 +22,16 @@ export class ModProductoPage implements OnInit {
   }
 
   obtenerProductos() {
-    this.productoService.obtener_productos().subscribe({
-      next: (response:any) => {
-        this.productos = response.body || [];
-      },
-      error: (error:any) => {
-        console.error('Error al obtener productos:', error);
-      },
-    });
+    this.productoService
+      .obtener_productos(this.currentPage, this.itemsPerPage)
+      .subscribe({
+        next: (response: any) => {
+          this.productos = response.body || [];
+        },
+        error: (error: any) => {
+          console.error('Error al obtener productos:', error);
+        },
+      });
   }
 
   // Activar edición
@@ -36,32 +41,40 @@ export class ModProductoPage implements OnInit {
   }
 
   actualizarDescripcionProducto(idProducto: number, nuevaDescripcion: string) {
-    this.productoService.modificarProductoDescripcion(idProducto, nuevaDescripcion).subscribe({
-      next: () => {
-        console.log('Descripción actualizada exitosamente');
-        this.obtenerProductos();  // Actualiza el listado después de la modificación
-      },
-      error: (error) => {
-        console.error('Error al actualizar la descripción:', error);
-      },
-    });
+    this.productoService
+      .modificarProductoDescripcion(idProducto, nuevaDescripcion)
+      .subscribe({
+        next: () => {
+          console.log('Descripción actualizada exitosamente');
+          this.obtenerProductos(); // Actualiza el listado después de la modificación
+        },
+        error: (error) => {
+          console.error('Error al actualizar la descripción:', error);
+        },
+      });
   }
+
   actualizarDescripcion() {
     // Solo procede si el producto en edición no es nulo
     if (this.editando !== null) {
-        this.productoService.modificarProductoDescripcion(this.editando, this.descripcionActualizada).subscribe({
-            next: () => {
-                console.log('Descripción actualizada exitosamente');
-                this.obtenerProductos(); // Vuelve a cargar la lista después de actualizar
-                this.editando = null; // Finaliza el modo de edición
-                this.descripcionActualizada = ''; // Limpia la descripción después de guardar
-            },
-            error: (error: any) => {
-                console.error('Error al actualizar la descripción:', error);
-            },
+      this.productoService
+        .modificarProductoDescripcion(
+          this.editando,
+          this.descripcionActualizada
+        )
+        .subscribe({
+          next: () => {
+            console.log('Descripción actualizada exitosamente');
+            this.obtenerProductos(); // Vuelve a cargar la lista después de actualizar
+            this.editando = null; // Finaliza el modo de edición
+            this.descripcionActualizada = ''; // Limpia la descripción después de guardar
+          },
+          error: (error: any) => {
+            console.error('Error al actualizar la descripción:', error);
+          },
         });
     }
-}
+  }
 
   // Eliminar producto
   eliminarProducto(id: number) {
@@ -69,9 +82,21 @@ export class ModProductoPage implements OnInit {
       next: () => {
         this.obtenerProductos();
       },
-      error: (error:any) => {
+      error: (error: any) => {
         console.error('Error al eliminar producto:', error);
       },
     });
+  }
+
+  nextPage() {
+    this.currentPage++;
+    this.obtenerProductos();
+  }
+
+  prevPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.obtenerProductos();
+    }
   }
 }

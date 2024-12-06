@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { Usuario } from 'src/app/models/usuario';
 
@@ -6,9 +7,12 @@ import { Usuario } from 'src/app/models/usuario';
   providedIn: 'root',
 })
 export class AutentificacionService {
-  private sessionTimeout = 5 * 60 * 1000; // 1 minuto en milisegundos
+  private sessionTimeout = 5 * 60 * 1000; // 5 minutos en milisegundos
 
-  constructor(private _servicioUsuario: UsuariosService) {}
+  constructor(
+    private _servicioUsuario: UsuariosService,
+    private router: Router
+  ) {}
 
   autentificacion(username: string, password: string): boolean {
     const usuarios = this._servicioUsuario.obtener_lista_usuarios();
@@ -51,6 +55,7 @@ export class AutentificacionService {
   cerrarSesion() {
     localStorage.removeItem('usuario');
     localStorage.removeItem('ultimoActividad');
+    this.router.navigate(['/login']); // Redirige al usuario a la página de login
   }
 
   estaAutenticado(): boolean {

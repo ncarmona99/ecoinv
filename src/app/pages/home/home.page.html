@@ -10,14 +10,36 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-refresher slot="fixed" [pullFactor]="0.5" [pullMin]="100" [pullMax]="200" (ionRefresh)="handleRefresh($event)">
+  <ion-refresher
+    slot="fixed"
+    [pullFactor]="0.5"
+    [pullMin]="100"
+    [pullMax]="200"
+    (ionRefresh)="handleRefresh($event)"
+  >
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-radio-group [(ngModel)] ="valorSel" (ionChange)="onRadioChange($event)">
+  <ion-radio-group [(ngModel)]="valorSel" (ionChange)="onRadioChange($event)">
     <ion-item *ngFor="let producto of productos">
       <ion-radio slot="start" [value]="producto"></ion-radio>
       <ion-label>{{producto.descripcion}}</ion-label>
       <ion-label>{{producto.stock}}</ion-label>
+      <ion-button *ngIf="producto.imagenUrl" (click)="mostrarImagen(producto)"
+        >Ver Imagen</ion-button
+      >
     </ion-item>
   </ion-radio-group>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="prevPage()" [disabled]="currentPage === 0"
+          >Anterior</ion-button
+        >
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="nextPage()">Siguiente</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 </ion-content>

@@ -1,0 +1,6 @@
+projectKey=InvEco
+serverUrl=http://localhost:9000
+serverVersion=24.12.0.100206
+dashboardUrl=http://localhost:9000/dashboard?id=InvEco
+ceTaskId=e2473527-7462-42f0-b7b9-8133a58d0d1c
+ceTaskUrl=http://localhost:9000/api/ce/task?id=e2473527-7462-42f0-b7b9-8133a58d0d1c

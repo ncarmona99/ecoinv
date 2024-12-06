@@ -6,7 +6,6 @@
     <ion-title>Crear Producto</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <form (ngSubmit)="crearProducto()">
     <ion-item>
@@ -17,7 +16,6 @@
         required
       ></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label position="floating">Descripción</ion-label>
       <ion-input
@@ -26,7 +24,6 @@
         required
       ></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label position="floating">Stock</ion-label>
       <ion-input
@@ -36,7 +33,10 @@
         required
       ></ion-input>
     </ion-item>
-
+    <ion-item>
+      <ion-label position="floating">Imagen</ion-label>
+      <ion-button (click)="tomarFoto()">Tomar Foto</ion-button>
+    </ion-item>
     <ion-button expand="full" type="submit">Agregar Producto</ion-button>
   </form>
 </ion-content>

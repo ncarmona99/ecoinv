@@ -15,25 +15,50 @@
       </ion-label>
 
       <!-- Campo para editar la descripción -->
-      <ion-input *ngIf="editando === producto.idproducto" [(ngModel)]="descripcionActualizada"></ion-input>
+      <ion-input
+        *ngIf="editando === producto.idproducto"
+        [(ngModel)]="descripcionActualizada"
+      ></ion-input>
 
       <!-- Botones para Editar, Guardar y Eliminar -->
       <ion-buttons slot="end">
         <!-- Botón de Editar -->
-        <ion-button *ngIf="editando !== producto.idproducto" (click)="activarEdicion(producto.idproducto, producto.descripcion)">
+        <ion-button
+          *ngIf="editando !== producto.idproducto"
+          (click)="activarEdicion(producto.idproducto, producto.descripcion)"
+        >
           Editar
         </ion-button>
-        
+
         <!-- Botón de Guardar -->
-        <ion-button *ngIf="editando === producto.idproducto" (click)="actualizarDescripcion()">
+        <ion-button
+          *ngIf="editando === producto.idproducto"
+          (click)="actualizarDescripcion()"
+        >
           Guardar
         </ion-button>
 
         <!-- Botón de Eliminar -->
-        <ion-button color="danger" (click)="eliminarProducto(producto.idproducto)">
+        <ion-button
+          color="danger"
+          (click)="eliminarProducto(producto.idproducto)"
+        >
           Eliminar
         </ion-button>
       </ion-buttons>
     </ion-item>
   </ion-list>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="prevPage()" [disabled]="currentPage === 0"
+          >Anterior</ion-button
+        >
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="nextPage()">Siguiente</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 </ion-content>

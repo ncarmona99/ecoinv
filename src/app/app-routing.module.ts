@@ -51,7 +51,11 @@ const routes: Routes = [
     path: 'crea-producto',
     loadChildren: () => import('./pages/crea-producto/crea-producto.module').then( m => m.CreaProductoPageModule),
     canActivate: [AuthGuard],
+  },  {
+    path: 'image-modal',
+    loadChildren: () => import('./pages/image-modal/image-modal.module').then( m => m.ImageModalPageModule)
   },
+
 ];
 
 @NgModule({

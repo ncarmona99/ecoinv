@@ -18,13 +18,13 @@ export class EditPage implements OnInit {
   cantidad: number = 0;
   solicitanteSeleccionado: number | null = null;
   productoId: number;
-  
+
   constructor(
     private modalControl: ModalController,
     private navParams: NavParams,
     private _serviceSolicitante: SolicitanteService,
     private apiConfigService: ApiConfigService,
-    private alertController: AlertController,
+    private alertController: AlertController
   ) {
     this.productoId = this.navParams.get('productoId'); // Obtiene el ID del producto seleccionado
     console.log('Producto ID en edit page:', this.productoId); // Agrega esto para depuración
@@ -48,18 +48,20 @@ export class EditPage implements OnInit {
   async enviarSolicitud() {
     let estado: boolean;
     if (!this.solicitanteSeleccionado || !this.cantidad) {
-
       console.error('Debe seleccionar un solicitante y una cantidad');
       return;
     }
-  
+
     // Primero, actualiza el stock del producto
     try {
       // Actualizamos el stock del producto usando 'idproducto'
-      await this.apiConfigService.patch<any>(`producto?idproducto=eq.${this.productoId}`, {
-        idproducto: this.productoId, // ID del producto
-        cantidad: this.cantidad // Cantidad que se va a descontar
-      });
+      await this.apiConfigService.patch<any>(
+        `producto?idproducto=eq.${this.productoId}`,
+        {
+          idproducto: this.productoId, // ID del producto
+          cantidad: this.cantidad, // Cantidad que se va a descontar
+        }
+      );
       console.log('Stock actualizado correctamente');
     } catch (error) {
       console.error('Error al actualizar el stock:', error);
@@ -72,7 +74,7 @@ export class EditPage implements OnInit {
       cantidad: this.cantidad,
       fechasolicitud: new Date(),
     };
-  
+
     try {
       const response = await firstValueFrom(
         this.apiConfigService.post<any>('solicitud', nuevaSolicitud) // Ajusta el endpoint
@@ -81,72 +83,76 @@ export class EditPage implements OnInit {
       estado = true;
       this.presentAlert(estado);
       this.modalControl.dismiss(); // Cierra el modal si todo sale bien
-      
     } catch (error) {
       estado = false;
       this.presentAlert(estado);
       console.error('Error al guardar la solicitud:', error);
     }
   }
-  
+
   close() {
     this.modalControl.dismiss();
   }
-  
-  async actualizarStockProducto(productoId: number, cantidadSolicitada: number): Promise<void> {
+
+  async actualizarStockProducto(
+    productoId: number,
+    cantidadSolicitada: number
+  ): Promise<void> {
     try {
       // Obtener el producto actual con el stock usando 'idproducto'
       const productoResponse = await firstValueFrom(
         this.apiConfigService.get<any>(`producto?idproducto=eq.${productoId}`)
       );
-  
+
       const producto = productoResponse.body[0]; // Acceder al primer objeto si se devuelve una lista
-  
+
       if (!producto) {
         console.error('Producto no encontrado');
         return;
       }
-  
+
       const stockActual = producto.stock;
-  
+
       // Calcular el nuevo stock
       const nuevoStock = stockActual - cantidadSolicitada;
-  
+
       // Verificar que el stock no sea negativo
       if (nuevoStock < 0) {
         console.error('Error: El stock no puede ser negativo');
         return;
       }
-  
+
       // Actualizar el stock en la base de datos usando 'idproducto'
       console.log('Actualizando stock para el producto:', productoId);
       console.log('Stock actual:', stockActual);
       console.log('Cantidad solicitada:', cantidadSolicitada);
       console.log('Nuevo stock:', nuevoStock);
-  
+
       const updateResponse = await firstValueFrom(
-        this.apiConfigService.patch<any>(`producto?idproducto=eq.${productoId}`, { stock: nuevoStock }) // Usa PATCH para actualizar el stock
+        this.apiConfigService.patch<any>(
+          `producto?idproducto=eq.${productoId}`,
+          { stock: nuevoStock }
+        ) // Usa PATCH para actualizar el stock
       );
-  
+
       console.log('Respuesta de la actualización:', updateResponse.body);
     } catch (error) {
       console.error('Error al actualizar el stock:', error);
     }
   }
   async presentAlert(estado: boolean) {
-    if(estado==true){
+    if (estado == true) {
       const alert = await this.alertController.create({
         header: 'Solicitud realizada con éxito',
         buttons: ['Aceptar'],
       });
-  
-      await alert.present();
 
-    }else{
+      await alert.present();
+    } else {
       const alert = await this.alertController.create({
         header: 'Ha ocurrido un error al enviar la solicitud',
         buttons: ['Aceptar'],
-    })
+      });
       await alert.present();
     }
   }
