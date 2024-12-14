@@ -37,6 +37,7 @@
       <ion-label position="floating">Imagen</ion-label>
       <ion-button (click)="tomarFoto()">Tomar Foto</ion-button>
     </ion-item>
-    <ion-button expand="full" type="submit">Agregar Producto</ion-button>
+    <ion-button expand="full" type="submit" [disabled]="isLoading">Agregar Producto</ion-button>
   </form>
+  <ion-loading *ngIf="isLoading" message="Agregando producto..."></ion-loading>
 </ion-content>
